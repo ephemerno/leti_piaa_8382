@@ -1,0 +1,23 @@
+﻿  A.cpp.cpp
+C:\Users\user\Desktop\Work\Uni\ПАА\lab2\Source\A.cpp\A.cpp\A.cpp.cpp(21,23): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\user\Desktop\Work\Uni\ПАА\lab2\Source\A.cpp\A.cpp\A.cpp.cpp(31,23): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\user\Desktop\Work\Uni\ПАА\lab2\Source\A.cpp\A.cpp\A.cpp.cpp(32,27): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\user\Desktop\Work\Uni\ПАА\lab2\Source\A.cpp\A.cpp\A.cpp.cpp(33,38): warning C4244: +=: преобразование "_Ty2" в "int", возможна потеря данных
+          with
+          [
+              _Ty2=double
+          ]
+C:\Users\user\Desktop\Work\Uni\ПАА\lab2\Source\A.cpp\A.cpp\A.cpp.cpp(95,23): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\user\Desktop\Work\Uni\ПАА\lab2\Source\A.cpp\A.cpp\A.cpp.cpp(112,23): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.24.28314\include\utility(179,16): warning C4244: инициализация: преобразование "const _Ty1" в "_Ty1", возможна потеря данных
+          with
+          [
+              _Ty1=double
+          ]
+          and
+          [
+              _Ty1=int
+          ]
+C:\Users\user\Desktop\Work\Uni\ПАА\lab2\Source\A.cpp\A.cpp\A.cpp.cpp(121): message : выполняется компиляция ссылки на экземпляр шаблон функции "std::pair<int,int>::pair<double,int,0>(const std::pair<double,int> &) noexcept"
+C:\Users\user\Desktop\Work\Uni\ПАА\lab2\Source\A.cpp\A.cpp\A.cpp.cpp(121): message : выполняется компиляция ссылки на экземпляр шаблон функции "std::pair<int,int>::pair<double,int,0>(const std::pair<double,int> &) noexcept"
+  A.cpp.vcxproj -> C:\Users\user\Desktop\Work\Uni\ПАА\lab2\Source\A.cpp\Debug\A.cpp.exe
