@@ -1,0 +1,6 @@
+a c
+a b 5
+b c 4
+a c 8
+
+Result : abc

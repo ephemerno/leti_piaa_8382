@@ -1,0 +1,7 @@
+a c
+3
+a b 5
+b c 4
+a c 8
+
+Result : ac

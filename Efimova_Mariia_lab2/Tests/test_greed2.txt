@@ -1,0 +1,7 @@
+b d
+b a 2
+b d 15
+a g 4
+g d 8
+
+Result : bagd

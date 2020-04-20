@@ -1,0 +1,14 @@
+A:
+
+test 1 : https://ideone.com/tUeY6k
+test 2 : https://ideone.com/G4DHH3
+test 3 : https://ideone.com/PXZ6Pb
+
+Greed:
+
+test 1 : https://ideone.com/NVxQ9m
+test 2 : https://ideone.com/IQznr3
+test 3 : https://ideone.com/2NGkuT
+
+
+
