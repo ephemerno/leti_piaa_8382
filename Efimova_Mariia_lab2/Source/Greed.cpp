@@ -1,5 +1,4 @@
 ﻿// Pia lab_2.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
 
 #include <iostream>
 #include <vector>
@@ -9,22 +8,36 @@
 
 using namespace std;
 
-struct Input_El { // структура вводимого элемента
-	char top1;
-	char top2;
-	double weigth;
+//структура, описывающая входное ребро
+struct Input_El { 
+	char top1;//из которой выходит ребро
+	char top2;//в которую входит ребро
+	double weigth;//расстояние между рёбрами.
 };
 
-bool Sort(const pair<int, double >& a, const pair<int, double >& b) {// функция сортировки
+/*Вид : bool foo(const T& a, const T& b), где T — тип элементов сортируемого вектора
+ Проверка, упорядочены ли a и b по возрастанию
+ Используем в ф-ции void Sort_Weigth ниже*/
+
+bool Sort(const pair<int, double >& a, const pair<int, double >& b) {
 	return (a.second < b.second);
 }
 
-void Sort_Weigth(vector<vector<pair<int, double>>>& nodes) {//функция сортировки весов
+/*функция сортировки ребёр в порядке увеличения веса для каждой вершины.
+ используется  список смежности, 
+ vector<vector<pair<double,int>>> nodes,где
+ первый вектор - список всех вершин графа,
+ второй вектор - список всех вершин, смежных для каждого элемента первого вектора
+*/
+void Sort_Weigth(vector<vector<pair<int, double>>>& nodes) {
 	int len = nodes.size();
 	for (int i = 0; i < len; i++) {
 		sort(nodes[i].begin(), nodes[i].end(), Sort);
 	}
 }
+
+/* map<int,char> &convert_to_char — словарь, переводящий номер вершины в её буквенное обозначение, 
+   vector<int> &road — вектор вершин, через которые проходит минимальный путь в жадном алгоритме.*/
 
 void Print_Output(map<int, char>& convert_to_char, vector<int>& road) {//функция печатает вывод
 	for (int i = 0; i < road.size(); i++) {
@@ -32,18 +45,29 @@ void Print_Output(map<int, char>& convert_to_char, vector<int>& road) {//фун�
 	}
 }
 
+/* функция для формирования списка
+   vector<vector<pair<int,double >>> nodes — структура данных для хранения списка смежности.
+   map<char,int> &convert_to_int — словарь для перевода буквенного обозначения вершины в её номер.
+   vector<inputElement> &input_seq — вектор для хранения последовательности входных рёбер.
+   input_seq 'состоит' из struct Input_El 
+*/
 void From_List(vector<vector<pair<int, double>>>& nodes, map<char, int>& convert_to_int, vector<Input_El>& input_seq) {
 	int top1;
 	int top2;
 	double weigth;
 	for (int i = 0; i < input_seq.size(); i++) {
-		top1 = convert_to_int[input_seq[i].top1];
+		top1 = convert_to_int[input_seq[i].top1];//берем i-тый элемент из вектора input_seq и затем берем у него поле top1
 		top2 = convert_to_int[input_seq[i].top2];
 		weigth = input_seq[i].weigth;
-		nodes[top1].push_back(make_pair(top2, weigth));
+		nodes[top1].push_back(make_pair(top2, weigth));//make_pair создает пару из top2 и weight и  вставляет в массив nodes под индексом top1
 	}
 }
 
+/* функция нахождения пути в графе для жадного алгоритма
+   vector<vector<pair<int,double >>> nodes — структура данных для хранения списка смежности
+   vector<int> &road — вектор вершин, через которые проходит минимальный путь
+   переход от вершины происходит по минимальному ребру, исходящему из неё
+*/
 void Find_Way(vector<vector<pair<int, double>>>& nodes, vector<int>& road, int top1, int top2, bool& check) {//ищем путь
 	road.push_back(top1);
 	if (top1 == top2) {
@@ -58,6 +82,10 @@ void Find_Way(vector<vector<pair<int, double>>>& nodes, vector<int>& road, int t
 	}
 }
 
+/* vector<vector<pair<int,double>>> &nodes — структура данных для хранения списка смежности,
+ map<int,char> &convert_to_char — словарь, переводящий номер вершины в её буквенное обозначение,
+ map<char,int> &convert_to_int — словарь для перевода буквенного обозначения вершины в её номер.   
+*/
 void Input(vector<vector<pair<int, double>>>& nodes, map<int, char>& convert_to_char, map<char, int>& convert_to_int) {
 	vector<Input_El> input_seq;//вводимая последовательность
 	Input_El elem;
@@ -86,10 +114,17 @@ void Input(vector<vector<pair<int, double>>>& nodes, map<int, char>& convert_to_
 			k++;
 		}
 	}
-	nodes.resize(k);
+	nodes.resize(k);//resize () изменяет количество символов
 	From_List(nodes, convert_to_int, input_seq);
 }
 
+/*
+while(не будет найдена конечная вершина){
+вод данных -> вызов Sort_Weigth (nodes), сортирующая рёбра,
+исходящие из вершины, по убыванию -> find_Way в которой переход от вершины 1 
+происходит по минимальному ребру, исходящему из неё -> Print_Output
+}
+*/
 int main() {
 	char c1;
 	char c2;
@@ -98,11 +133,11 @@ int main() {
 	int top1;
 	int top2;
 	bool check = false;
-	vector<vector<pair<int, double >>> nodes;
-	vector<int> road;
-	map<char, int> convert_to_int;
-	map<int, char> convert_to_char;
-	Input(nodes, convert_to_char, convert_to_int);
+	vector<vector<pair<int, double >>> nodes;//храненим список смежности
+	vector<int> road;//вектор вершин, через которые проходит минимальный путь
+	map<char, int> convert_to_int;//словарь для перевода буквенного обозначения вершины в её номер
+	map<int, char> convert_to_char;//словарь, переводящий номер вершины в её буквенное обозначение
+	Input(nodes, convert_to_char, convert_to_int);//вводим данные
 	Sort_Weigth(nodes);
 	top1 = convert_to_int[c1];
 	top2 = convert_to_int[c2];
