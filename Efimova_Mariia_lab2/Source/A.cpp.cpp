@@ -1,5 +1,4 @@
 ﻿// A.cpp.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
 #include <iostream>
 #include <vector>
 #include <stack>
@@ -8,11 +7,17 @@
 #include <math.h>
 using namespace std;
 
+//структура, описывающая входное ребро
 struct InputEl {
-    char top1; //первая вершина
-    char top2; //вторая вершина
-    double weigth;
+    char top1; //из которой выходит ребро
+    char top2; //в которую входит ребро
+    double weigth;//расстояние между рёбрами.
 };
+/*
+vector<vector<pair<double,int>>> nodes,
+ первый вектор - список всех вершин графа,
+ второй вектор - список всех вершин, смежных для каждого элемента первого вектора.
+*/
 
 void fromNeighbor_list(vector<vector<pair<int, double>>>& nodes, map<char, int>& convert_to_int, vector<InputEl>& input_consistency) {
     //pair<int,double> через конструктор инициализируем пару целого типа и двойной точности
@@ -36,6 +41,13 @@ int counting_sum_of_weigth(vector<vector<pair<int, double>>>& nodes) {
     return sum + 1;
 }
 
+/*
+функция для вывода списка вершин по кратчайшему пути.
+vector<int> &prev — вектор, хранящий в prev[i] номер предыдущей вершины,
+для вершины с номером i, через которую проходит кратчайший путь.
+map<int,char> &convert_to_char) — словарь соответствия номера вершины и её буквенного представления
+int top — номер конечной вершины
+*/
 void recovery_way(vector<int>& prev, map<int, char>& convert_to_char, int top) {
     stack<int> steck;//создаем стек
     while (prev[top] != -1) {
@@ -49,6 +61,13 @@ void recovery_way(vector<int>& prev, map<int, char>& convert_to_char, int top) {
         steck.pop();//удаляем верхний элемент стека
     }
 }
+
+/*
+Ввод данных происходит в функции input.Считав данные, запускается функция A*.
+vector<vector<pair<int,double>>> &nodes — структура данных для хранения списка смежности
+map<int,char> &convert_to_char — словарь, переводящий номер вершины в её буквенное обозначение
+map<char,int> &convert_to_int — словарь для перевода буквенного обозначения вершины в её номер
+*/
 
 void input(vector<vector<pair<int, double>>>& nodes, map<int, char>& convert_to_char, map<char, int>& convert_to_int) {
     char top1;
@@ -90,7 +109,19 @@ void input(vector<vector<pair<int, double>>>& nodes, map<int, char>& convert_to_
     fromNeighbor_list(nodes, convert_to_int, input_consistency);
 }
 
-//!!!!!
+/*
+просматривает все соседние вершины и если расстояние от начальной вершины до неё меньше расстояния от первоначальной вершины до этого соседа,
+то его расстояние изменяется, а сама вершина кладётся в очередь с приоритетом. 
+Посчитав кратчайшее расстояние до конечной вершины, цикл завершается.
+
+vector<vector<pair<int, double>>> &nodes — струтура данных для списка смежности
+map<int,char> &convert_to_char - словарь, переводящий номер вершины в её буквенное обозначение
+priority_queue<pair<double,int>> &near_way — очередь с приоритетом
+<double> &dist — вектор расстояний до начальной вершины
+vector<int> &prev — вектор, хранящий в prev[i] номер предыдущей вершины для вершины с номером i, через которую проходит кратчайший путь
+int top1— номер текущей вершины,
+int top2 — номер начальной вершины
+*/
 void change_dist(vector<vector<pair<int, double>>>& nodes, priority_queue<pair<double, int>>& near_ways, vector<double>& dist, vector<int>& prev, map<int, char>& convert_to_char, int top, int top2) {
     for (int i = 0; i < nodes[top].size(); i++) {
         if (dist[nodes[top][i].first] > dist[top] + nodes[top][i].second) {
@@ -101,6 +132,13 @@ void change_dist(vector<vector<pair<int, double>>>& nodes, priority_queue<pair<d
     }
 }
 
+
+/*
+функция A*, определяет минимальный путь между двумя вершинами.
+Первоначальная вершина кладётся в очередь с приоритетом, после чего начинается цикл while,
+работающий до тех пор, пока вершина кучи меньше расстояния от конечной вершины до начальной или пока очередь с приоритетом не станет пустой.
+На каждой итерации цикла из очереди достаётся вершина с минимальным значением.
+*/
 void AStar(vector<vector<pair<int, double >>>& nodes, map<int, char>& convert_to_char, int top1, int top2) {
     int current_top;
     int min;
